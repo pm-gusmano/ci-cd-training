@@ -3,15 +3,17 @@ on: push
 jobs:
 
     test-python-versions:
-        name: Check Python ${{ matrix.python-version }} on Ubuntu
-        runs-on: [ubuntu-latest, windows-latest, macos-latest]
+        name: Check Python ${{ matrix.python-version }} on ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
         strategy:
           fail-fast: false
           matrix:
+              os: [ubuntu-latest, windows-latest, macos-latest]
               python-version: ["3.10", "3.11"]
               allow-failure: [false]
               include:
                 - python-version: "3.14.0-beta.4"
+                  os: ubuntu-latest
                   allow-failure: true
         steps:
           - uses: actions/checkout@v4
